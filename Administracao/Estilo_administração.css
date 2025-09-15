@@ -1,0 +1,245 @@
+/* =====================================
+   VARIÁVEIS E ESTILOS GLOBAIS
+   ===================================== */
+:root {
+    /* Paleta de Cores (similar à do site BePet para consistência) */
+    --cor-primaria: #FF6B6B;     /* Vermelho/Rosa para ações destrutivas (Excluir) */
+    --cor-secundaria: #6c757d;   /* Cinza para ações secundárias (Responder) */
+    --cor-terciaria: #264653;    /* Azul escuro (para texto e elementos fortes) */
+    --cor-fundo: #f8f9fa;        /* Cinza bem claro para o fundo */
+    --cor-texto: #4A5568;        /* Cinza escuro para texto principal */
+    --cor-branco: #ffffff;
+    --cor-borda: #E2E8F0;
+
+    /* Tipografia */
+    --fonte-titulos: 'Poppins', sans-serif;
+    --fonte-corpo: 'Lato', sans-serif;
+
+    /* Efeitos */
+    --box-shadow-light: 0 4px 10px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+    --transition: all 0.2s ease-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    color: var(--cor-terciaria);
+    text-decoration: none;
+    transition: var(--transition);
+}
+a:hover {
+    color: var(--cor-primaria);
+}
+
+h2 {
+    font-family: var(--fonte-titulos);
+    color: var(--cor-terciaria);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* =====================================
+   HEADER
+   ===================================== */
+header {
+    background-color: var(--cor-branco);
+    padding: 20px 0;
+    box-shadow: var(--box-shadow-light);
+    border-bottom: 1px solid var(--cor-borda);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--fonte-titulos);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.main-nav a {
+    font-weight: 600;
+    padding: 8px 0;
+}
+/* Classe para o link da página ativa */
+.main-nav a.active {
+    color: var(--cor-primaria);
+    border-bottom: 3px solid var(--cor-primaria);
+}
+
+.header-cta-button {
+    background-color: var(--cor-terciaria);
+    color: var(--cor-branco);
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+.header-cta-button:hover {
+    background-color: #3a5c6d;
+    color: var(--cor-branco);
+}
+
+.menu-mobile-toggle { display: none; } /* Oculto por simplicidade */
+
+
+/* =====================================
+   MAIN CONTENT - RESPOSTAS
+   ===================================== */
+#respostas {
+    padding: 80px 0;
+}
+
+.lista-respostas {
+    display: grid;
+    gap: 30px;
+}
+
+.card-mensagem {
+    background: var(--cor-branco);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    border-left: 6px solid var(--cor-terciaria);
+    box-shadow: var(--box-shadow-light);
+    transition: var(--transition);
+}
+
+.card-mensagem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.card-mensagem blockquote p {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+
+.card-mensagem figcaption {
+    text-align: right;
+    font-weight: 700;
+    color: var(--cor-terciaria);
+}
+
+.card-mensagem figcaption a {
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+}
+
+.admin-actions {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cor-borda);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Estilo base para botões nas actions */
+.admin-actions a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    transition: var(--transition);
+    background-color: var(--cor-borda);
+    color: var(--cor-terciaria);
+}
+
+.admin-actions a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Botão de Responder */
+.btn-responder {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branco);
+}
+
+.btn-responder:hover {
+    background-color: #4e98c1; /* Tom de azul para o hover */
+    color: var(--cor-branco);
+}
+
+/* Botão de Excluir */
+.btn-excluir {
+    background-color: var(--cor-primaria);
+    color: var(--cor-branco);
+}
+
+.btn-excluir:hover {
+    background-color: #e65a5a; /* Tom de vermelho mais escuro para o hover */
+    color: var(--cor-branco);
+}
+
+
+/* =====================================
+   FOOTER
+   ===================================== */
+footer {
+    background-color: var(--cor-terciaria);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =====================================
+   ALERTAS E NOTIFICAÇÕES
+   ===================================== */
+.alerta {
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 700;
+}
+
+.alerta-sucesso {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724;            /* Verde escuro */
+    border-color: #c3e6cb;
+}

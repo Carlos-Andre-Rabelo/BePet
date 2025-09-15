@@ -1,0 +1,560 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@600;700;800&display=swap');
+
+/* ==========================================================================
+   0. VARIÁVEIS GLOBAIS (:root)
+   ========================================================================== */
+:root {
+    /* Cores */
+    --cor-primaria: #FF6B6B;
+    --cor-secundaria: #FFD166;
+    --cor-terciaria: #264653;
+    --cor-fundo: #FFF8F0;
+    --cor-texto: #4A5568;
+    --cor-cinza-claro: #E2E8F0;
+    --cor-branca: #FFFFFF;
+
+    /* Tipografia */
+    --fonte-titulos: 'Poppins', sans-serif;
+    --fonte-corpo: 'Lato', sans-serif;
+
+    /* Efeitos e Medidas */
+    --sombra-leve: 0 4px 10px rgba(0, 0, 0, 0.05);
+    --sombra-media: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --raio-borda: 15px;
+    --transicao-rapida: all 0.2s ease-out;
+    --transicao-media: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ==========================================================================
+   1. ESTILOS GLOBAIS E RESET
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+section {
+    padding: 80px 0;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulos);
+    color: var(--cor-terciaria);
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.8rem; }
+h2 {
+    text-align: center;
+    font-size: 2.3rem;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 10px;
+}
+h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--cor-primaria);
+    border-radius: 2px;
+}
+h3 { font-size: 1.8rem; }
+
+/* ==========================================================================
+   2. COMPONENTES REUTILIZÁVEIS (BOTÕES, ETC.)
+   ========================================================================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cta-button {
+    font-family: var(--fonte-titulos);
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    padding: 15px 30px;
+    border: none;
+    border-radius: var(--raio-borda);
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: var(--transicao-media);
+    box-shadow: 0 8px 15px rgba(255, 107, 107, 0.3);
+}
+.cta-button:hover {
+    transform: translateY(-7px) scale(1.03);
+    background-color: #e65a5a;
+    box-shadow: 0 15px 25px rgba(255, 107, 107, 0.4);
+}
+
+/* CORRIGIDO: Exclui o botão de hambúrguer da estilização genérica */
+button:not(.cta-button, .menu-mobile-toggle) {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-terciaria);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+button:not(.cta-button, .menu-mobile-toggle):hover {
+    background-color: #ffc44d;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* ==========================================================================
+   3. CABEÇALHO E NAVEGAÇÃO
+   ========================================================================== */
+header {
+    background-color: var(--cor-fundo);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--sombra-leve);
+    border-bottom: 1px solid var(--cor-cinza-claro);
+}
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-family: var(--fonte-titulos);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--cor-terciaria);
+    text-decoration: none;
+    letter-spacing: -1px;
+    transition: var(--transicao-rapida);
+}
+.logo:hover {
+    color: var(--cor-primaria);
+}
+
+/* --- Navegação (Base Mobile) --- */
+.main-nav {
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 85px; /* Altura aproximada do header */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 85px);
+    background-color: var(--cor-fundo);
+}
+.main-nav.active {
+    display: flex; /* Mostra o menu quando ativo */
+    animation: fadeInUp 0.3s ease-out;
+}
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+.main-nav a {
+    font-family: var(--fonte-titulos);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cor-terciaria);
+    text-decoration: none;
+    padding: 10px;
+}
+.main-nav a:hover {
+    color: var(--cor-primaria);
+}
+
+.header-cta-button {
+    display: none; /* Escondido no mobile */
+}
+
+/* --- Botão Hambúrguer (Base Mobile) --- */
+.menu-mobile-toggle {
+    display: flex; /* Mostrado no mobile */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+.menu-mobile-toggle .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--cor-terciaria);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+.menu-mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.menu-mobile-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-mobile-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   4. SEÇÕES DA PÁGINA
+   ========================================================================== */
+
+/* --- Seção Hero --- */
+#hero {
+    text-align: center;
+    padding: 60px 0 100px 0;
+    background-image: linear-gradient(135deg, var(--cor-fundo) 0%, #ffe9d9 100%);
+}
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    animation: fadeInUp 1s ease-out;
+}
+#hero p {
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem auto;
+    animation: fadeInUp 1s ease-out 0.2s forwards;
+    opacity: 0;
+}
+#hero .cta-button {
+    animation: fadeInUp 1s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+/* --- Seção Serviços --- */
+.servicos-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+}
+.servico-item {
+    background-color: var(--cor-branca);
+    padding: 30px; 
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-media);
+    transition: var(--transicao-media);
+    text-align: center;
+    border: 1px solid var(--cor-cinza-claro);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.servico-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+}
+.servico-item img {
+    height: 120px;
+    width: 120px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); 
+}
+.servico-item h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+/* --- Seção Produtos --- */
+#produtos {
+    background-color: var(--cor-branca);
+}
+.produtos-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+}
+.produto-item {
+    background-color: var(--cor-fundo);
+    padding: 20px;
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-leve);
+    transition: var(--transicao-media);
+    text-align: center;
+    border: 1px solid var(--cor-cinza-claro);
+}
+.produto-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+}
+.produto-item img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+.produto-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+.produto-item .preco {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Seção Sobre Nós --- */
+#sobre-nos {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-terciaria);
+}
+#sobre-nos .container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+}
+#sobre-nos h2, #sobre-nos h3, #sobre-nos p { color: var(--cor-terciaria); }
+#sobre-nos h2::after { background-color: var(--cor-terciaria); }
+#sobre-nos p { opacity: 0.9; }
+#sobre-nos img {
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-media);
+    border: 5px solid var(--cor-branca);
+}
+
+/* --- Seção Depoimentos --- */
+.depoimento {
+    background: var(--cor-branca);
+    padding: 35px;
+    margin-bottom: 25px;
+    border-radius: var(--raio-borda);
+    border-left: 8px solid var(--cor-primaria);
+    box-shadow: var(--sombra-media);
+}
+.depoimento blockquote p {
+    font-style: italic;
+    font-size: 1.15rem;
+    margin-bottom: 1.2rem;
+}
+.depoimento figcaption {
+    text-align: right;
+    font-weight: 700;
+    font-family: var(--fonte-titulos);
+}
+
+/* --- Seção Contato --- */
+#contato {
+    background-color: var(--cor-terciaria);
+    color: var(--cor-branca);
+}
+#contato h2 { color: var(--cor-branca); }
+#contato h2::after { background-color: var(--cor-secundaria); }
+.contato-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+form input, form textarea {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1.05rem;
+    color: var(--cor-terciaria);
+    margin-bottom: 20px; /* Adiciona um espaçamento padrão abaixo dos inputs */
+}
+
+/* Estilo específico para o botão dentro do formulário de contato */
+form button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+}
+
+/* ==========================================================================
+   5. COMPONENTES ADICIONAIS (ALERTAS, ETC)
+   ========================================================================== */
+.alerta-contato {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   6. RODAPÉ
+   ========================================================================== */
+footer {
+    background-color: var(--cor-terciaria);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 50px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.footer-info {
+    font-style: normal; /* Remove o itálico padrão da tag <address> */
+    margin-bottom: 40px;
+}
+.footer-info h3 {
+    color: var(--cor-secundaria);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+.footer-info p {
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+
+.social-links {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+.social-links img {
+    height: 30px;
+    filter: brightness(0) invert(1);
+    transition: var(--transicao-rapida);
+}
+.social-links a:hover img {
+    transform: translateY(-5px) scale(1.1);
+    filter: brightness(0) invert(1) drop-shadow(0 5px 5px rgba(255, 209, 102, 0.4));
+}
+.copyright {
+    font-size: 0.95rem;
+    margin-top: 40px;
+}
+
+/* ==========================================================================
+   7. MEDIA QUERIES (ESTILOS PARA TELAS MAIORES)
+   ========================================================================== */
+
+/* --- Tablet e acima (>= 768px) --- */
+@media (min-width: 950px) {
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 2.8rem; }
+    h3 { font-size: 2rem; }
+
+    /* --- Header para Tablet/Desktop --- */
+    .main-nav {
+        display: block; /* Mostra a navegação principal */
+        position: static;
+        height: auto;
+        width: auto;
+        background-color: transparent;
+    }
+    .main-nav ul {
+        flex-direction: row;
+        gap: 30px;
+    }
+    .main-nav a {
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 8px 0;
+        position: relative;
+    }
+    .main-nav a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background-color: var(--cor-primaria);
+        border-radius: 2px;
+        transition: width 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    .main-nav a:hover { color: var(--cor-primaria); }
+    .main-nav a:hover::after { width: 100%; }
+
+    .header-cta-button {
+        display: inline-block; /* Mostra o botão CTA no header */
+    }
+    
+    .menu-mobile-toggle {
+        display: none; /* ESCONDE o botão hambúrguer */
+    }
+
+    /* --- Layouts de Seção --- */
+    #hero h1 { font-size: 4rem; }
+    #hero p { font-size: 1.25rem; }
+
+    .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .produtos-grid { grid-template-columns: repeat(2, 1fr); }
+
+    #sobre-nos .container { flex-direction: row; text-align: left; }
+    #sobre-nos div, #sobre-nos img { flex: 1; }
+    #sobre-nos img { max-width: 50%; }
+
+    .contato-wrapper {
+        max-width: 800px; /* Limita a largura do formulário em telas grandes */
+        margin: 0 auto; /* Centraliza o formulário */
+    }
+}
+
+/* --- Desktop e acima (>= 1024px) --- */
+@media (min-width: 1024px) {
+    h1 { font-size: 4.5rem; }
+    h2 { font-size: 3.2rem; }
+
+    /* --- Header para Desktop --- */
+    .logo { font-size: 2.5rem; }
+    .main-nav ul { gap: 40px; }
+    .main-nav a { font-size: 1.1rem; }
+
+    /* --- Layouts de Seção --- */
+    .servicos-grid { grid-template-columns: repeat(3, 1fr); }
+    .produtos-grid { grid-template-columns: repeat(3, 1fr); }
+
+    #sobre-nos img { max-width: 40%; }
+}
