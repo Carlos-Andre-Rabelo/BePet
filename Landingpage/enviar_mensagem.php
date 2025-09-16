@@ -33,10 +33,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = "";
     $banco = "bepet";
 
-    $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+    // Define o modo de relatório de erros do MySQLi para lançar exceções em vez de warnings.
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($conexao->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
+    try {
+        $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+    } catch (mysqli_sql_exception $e) {
+        // Em um ambiente de produção, o ideal é logar o erro em um arquivo.
+        // error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+        
+        // Exibe uma mensagem genérica e segura para o usuário.
+        die("Desculpe, estamos com problemas técnicos em nosso sistema. Por favor, tente novamente mais tarde.");
     }
 
     // 4. PREPARAR E EXECUTAR A INSERÇÃO SEGURA (PREPARED STATEMENT)

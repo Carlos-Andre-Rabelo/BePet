@@ -11,13 +11,20 @@ $banco = "bepet";
 
 // 1. CRIAR A CONEXÃO COM O BANCO DE DADOS
 // Usaremos o MySQLi para isso. A variável da conexão será $conexao.
-$conexao = new mysqli($servidor, $usuario, $senha, $banco);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-// 2. CHECAR A CONEXÃO
-// Se houver um erro, o script para e exibe a mensagem de erro.
-if ($conexao->connect_error) {
-    // Em um ambiente de produção, seria melhor logar o erro em vez de exibi-lo.
-    die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
+try {
+    $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+} catch (mysqli_sql_exception $e) {
+    // Em um ambiente de produção, o ideal é logar o erro em um arquivo.
+    // error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+    
+    // Exibe uma mensagem genérica e segura para o usuário.
+    // Usamos 'die()' para parar a execução e evitar que o resto da página (que depende do banco) tente carregar.
+    $erro_conexao = "Não foi possível conectar ao banco de dados. Verifique se o serviço MySQL está ativo e tente novamente.";
+    // Incluímos a view para mostrar o erro dentro do layout da página.
+    require 'respostas.view.php';
+    die();
 }
 
 // 3. CRIAR A QUERY SQL (CONSULTA)

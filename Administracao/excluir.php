@@ -19,14 +19,19 @@ if (isset($_GET['codigo']) && !empty($_GET['codigo'])) {
     $senha = "";
     $banco = "bepet";
 
-    $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+    // Define o modo de relatório de erros do MySQLi para lançar exceções.
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($conexao->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
+    try {
+        $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+    } catch (mysqli_sql_exception $e) {
+        // Loga o erro e exibe uma mensagem genérica.
+        // error_log("Erro de conexão no script de exclusão: " . $e->getMessage());
+        die("Ocorreu um erro de comunicação com o servidor. A operação não pôde ser concluída.");
     }
 
     // 4. PREPARAR E EXECUTAR A EXCLUSÃO SEGURA (PREPARED STATEMENT)
-    $sql = "DELETE FROM mensagens WHERE codigo = ?";
+    $sql = "DELETE FROM mensagem WHERE codigo = ?";
 
     $stmt = $conexao->prepare($sql);
 
