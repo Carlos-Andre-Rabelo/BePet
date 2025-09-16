@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 4. PREPARAR E EXECUTAR A INSERÇÃO SEGURA (PREPARED STATEMENT)
     // O SQL usa "?" como placeholders para os dados
-    $sql = "INSERT INTO mensagens (nome, email, mensagem) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO mensagem (nome, email, mensagem) VALUES (?, ?, ?)";
 
     // Prepara a declaração SQL para execução
     $stmt = $conexao->prepare($sql);

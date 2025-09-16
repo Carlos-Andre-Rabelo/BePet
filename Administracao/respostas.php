@@ -16,28 +16,31 @@ $conexao = new mysqli($servidor, $usuario, $senha, $banco);
 // 2. CHECAR A CONEXÃO
 // Se houver um erro, o script para e exibe a mensagem de erro.
 if ($conexao->connect_error) {
-    die("Falha na conexão: " . $conexao->connect_error);
+    // Em um ambiente de produção, seria melhor logar o erro em vez de exibi-lo.
+    die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
 }
 
 // 3. CRIAR A QUERY SQL (CONSULTA)
-// Selecionamos todas as colunas da tabela "mensagen" e ordenamos pela coluna "codigo" de forma descendente.
-$sql = "SELECT codigo, nome, email, mensagem FROM mensagen ORDER BY codigo DESC";
+// Selecionamos todas as colunas da tabela "mensagem" e ordenamos pela coluna "codigo" de forma descendente.
+$sql = "SELECT codigo, nome, email, mensagem FROM mensagem ORDER BY codigo DESC";
 
-// 4. EXECUTAR A QUERY E OBTER O RESULTADO
-$resultado = $conexao->query($sql);
+// 4. PREPARAR E EXECUTAR A CONSULTA DE FORMA SEGURA
+$stmt = $conexao->prepare($sql);
+if ($stmt === false) {
+    die("Erro ao preparar a declaração: " . $conexao->error);
+}
 
-// 5. TRANSFORMAR O RESULTADO EM UM ARRAY
-// Criamos um array vazio para guardar as mensagens.
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+// 5. TRANSFORMAR O RESULTADO EM UM ARRAY ASSOCIATIVO
 $mensagens = [];
-if ($resultado->num_rows > 0) {
-    // Se a consulta retornou uma ou mais linhas, percorremos cada uma
-    // e a adicionamos ao nosso array $mensagens.
-    while($linha = $resultado->fetch_assoc()) {
-        $mensagens[] = $linha;
-    }
+if ($resultado) {
+    $mensagens = $resultado->fetch_all(MYSQLI_ASSOC);
 }
 
 // 6. FECHAR A CONEXÃO COM O BANCO
+$stmt->close();
 $conexao->close();
 
 // 7. CHAMAR O ARQUIVO DE VISUALIZAÇÃO
