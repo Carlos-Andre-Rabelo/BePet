@@ -1,5 +1,6 @@
+DROP TABLE IF EXISTS mensagen;
 CREATE TABLE mensagen (
-    codigo INT serial PRIMARY KEY,
+    codigo BIGSERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     mensagem TEXT NOT NULL
