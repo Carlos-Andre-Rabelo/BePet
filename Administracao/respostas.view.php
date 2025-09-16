@@ -19,11 +19,18 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="#">Dashboard</a></li>
-                    <li><a href="#" class="active">Mensagens</a></li>
+                    <li><a href="respostas.php" class="active">Mensagens</a></li>
                     <li><a href="#">Configurações</a></li>
+                    <!-- O botão Sair será movido para dentro do menu no mobile via CSS -->
+                    <li class="nav-cta-mobile"><a href="../Landingpage/BePet.php" class="header-cta-button">Sair</a></li>
                 </ul>
             </nav>
-            <a href="../Landingpage/BePet.php" class="header-cta-button">Sair</a>
+            <!-- Botão Sair para Desktop -->
+            <a href="../Landingpage/BePet.php" class="header-cta-button desktop-only">Sair</a>
+            <!-- Botão Hambúrguer para Mobile -->
+            <button class="menu-mobile-toggle" aria-label="Abrir menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
         </div>
     </header>
 
@@ -104,6 +111,23 @@
                 // Atualiza a URL na barra de endereço do navegador, removendo todos os parâmetros,
                 // sem recarregar a página.
                 window.history.replaceState({}, document.title, url.pathname);
+            }
+        })();
+    </script>
+
+    <script>
+        // Script para controlar o menu mobile
+        (function() {
+            const menuMobileToggle = document.querySelector('.menu-mobile-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuMobileToggle && mainNav) {
+                menuMobileToggle.addEventListener('click', () => {
+                    // Adiciona/remove a classe 'active' no botão (para animar o 'X')
+                    menuMobileToggle.classList.toggle('active');
+                    // Adiciona/remove a classe 'active' na navegação (para mostrar/esconder)
+                    mainNav.classList.toggle('active');
+                });
             }
         })();
     </script>
