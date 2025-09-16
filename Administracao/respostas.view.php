@@ -23,7 +23,7 @@
                     <li><a href="#">Configurações</a></li>
                 </ul>
             </nav>
-            <a href="BePet.php" class="header-cta-button">Sair</a>
+            <a href="../Landingpage/BePet.php" class="header-cta-button">Sair</a>
         </div>
     </header>
 
