@@ -19,10 +19,8 @@ if ($conexao->connect_error) {
     die("Falha na conexão: " . $conexao->connect_error);
 }
 
-// 3. CRIAR A QUERY SQL (CONSULTA) CORRIGIDA
-// Selecionamos todas as colunas da tabela "mensagen".
-// CORREÇÃO: Trocamos "ORDER BY data_envio" por "ORDER BY codigo DESC"
-// pois a coluna "data_envio" não existe na sua tabela.
+// 3. CRIAR A QUERY SQL (CONSULTA)
+// Selecionamos todas as colunas da tabela "mensagen" e ordenamos pela coluna "codigo" de forma descendente.
 $sql = "SELECT codigo, nome, email, mensagem FROM mensagen ORDER BY codigo DESC";
 
 // 4. EXECUTAR A QUERY E OBTER O RESULTADO

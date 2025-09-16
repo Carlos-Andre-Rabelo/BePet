@@ -26,7 +26,7 @@ if (isset($_GET['codigo']) && !empty($_GET['codigo'])) {
     }
 
     // 4. PREPARAR E EXECUTAR A EXCLUSÃO SEGURA (PREPARED STATEMENT)
-    $sql = "DELETE FROM mensagen WHERE codigo = ?";
+    $sql = "DELETE FROM mensagens WHERE codigo = ?";
 
     $stmt = $conexao->prepare($sql);
 
