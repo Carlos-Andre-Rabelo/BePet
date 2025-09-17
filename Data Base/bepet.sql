@@ -8,3 +8,5 @@ CREATE TABLE mensagem (
     email VARCHAR(255) NOT NULL,
     mensagem TEXT NOT NULL
 );
+
+INSERT INTO mensagem (nome, email, mensagem) VALUES ('carlos', 'carlos@gmail.com', 'amei');
