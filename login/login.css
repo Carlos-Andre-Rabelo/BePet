@@ -1,0 +1,146 @@
+/* Definição das variáveis de design */
+:root {
+    /* Cores */
+    --cor-primaria: #FF6B6B;
+    --cor-secundaria: #FFD166;
+    --cor-terciaria: #264653;
+    --cor-fundo: #FFF8F0;
+    --cor-texto: #4A5568;
+    --cor-cinza-claro: #E2E8F0;
+    --cor-branca: #FFFFFF;
+
+    /* Tipografia */
+    --fonte-titulos: 'Poppins', sans-serif;
+    --fonte-corpo: 'Lato', sans-serif;
+
+    /* Efeitos e Medidas */
+    --sombra-media: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --raio-borda: 15px;
+    --transicao-media: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+/* Container principal */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: var(--fonte-titulos);
+    color: var(--cor-terciaria);
+    display: block; /* Para aplicar margem */
+    margin-bottom: 30px; /* Espaço entre o logo e o formulário */
+    transition: var(--transicao-media);
+}
+
+.logo:hover {
+    color: var(--cor-primaria);
+}
+/* Conteúdo principal */
+.login-main {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    min-height: 100vh;
+    padding: 20px;           /* Adiciona um respiro nas laterais em telas muito pequenas */
+    box-sizing: border-box;  /* Garante que o padding não quebre o layout de 100vh */
+}
+
+.login-container {
+    background-color: var(--cor-branca);
+    padding: 40px;
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-media);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-form h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-family: var(--fonte-titulos);
+    color: var(--cor-terciaria);
+}
+
+.login-form p {
+    margin-bottom: 30px;
+    color: var(--cor-texto);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-cinza-claro);
+    border-radius: 8px; /* Um pouco menos que o container para harmonia */
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: var(--transicao-media);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
+}
+
+/* Botão de submit */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-media);
+    text-transform: uppercase;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-terciaria);
+}
+
+/* --- Responsividade para Dispositivos Móveis --- */
+@media (max-width: 600px) {
+    /* As regras principais já garantem a centralização, mas podemos ajustar o container se necessário */
+
+    .login-container {
+        /* Reduz o padding interno no mobile para dar mais espaço ao conteúdo */
+        padding: 30px 25px;
+    }
+
+    .logo {
+        font-size: 3rem; /* Diminui um pouco o logo */
+        margin-bottom: 25px;
+    }
+}

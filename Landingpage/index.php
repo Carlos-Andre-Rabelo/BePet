@@ -25,7 +25,7 @@
             </ul>
         </nav>
 
-        <a href="#contato" class="header-cta-button cta-button">Agende Agora</a>
+        <a href="../login/login.php" class="header-cta-button cta-button">Entrar</a>
 
         <button class="menu-mobile-toggle" aria-label="Abrir menu">
             <span class="bar"></span>

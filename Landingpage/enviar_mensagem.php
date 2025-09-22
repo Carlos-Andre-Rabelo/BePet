@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         // Se a execução foi bem-sucedida, redireciona o usuário de volta para a página inicial
         // com um parâmetro de sucesso na URL.
-        header("Location: BePet.php?status=sucesso#contato");
+        header("Location: index.php?status=sucesso#contato");
         exit(); // Garante que o script pare de executar após o redirecionamento
     } else {
         // Se falhou, exibe um erro
