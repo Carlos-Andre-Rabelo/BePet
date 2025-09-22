@@ -9,5 +9,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redireciona para a página de login
-header("location: ../Landingpage/index.php");
-exit;
+header("Location: ../Landingpage/index.php");
+// Garante que o script pare de ser executado após o redirecionamento
+exit();

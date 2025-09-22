@@ -3,9 +3,15 @@
 session_start();
 
 // Se o usuário já estiver logado, redireciona para a página do painel
+// Se o usuário já estiver logado, redireciona para a página correta (admin ou landing page)
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('Location: painel.php');
-    exit;
+    // Verifica se a 'role' do usuário é de administrador
+    if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+        header('Location: ../administracao/respostas.php'); // Redireciona admin para a página de respostas
+    } else {
+        header('Location: ../Landingpage/index.php'); // Redireciona usuário comum para a Landing Page
+    }
+    exit; // Importante sair após o redirecionamento
 }
 
 $login_error = '';
@@ -34,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($email) && !empty($senha) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         // 4. PREPARAR E EXECUTAR A CONSULTA SEGURA
-        $sql = "SELECT codigo, nome, senha FROM login WHERE email = ? LIMIT 1";
+        $sql = "SELECT codigo, nome, senha, tipo_usuario FROM login WHERE email = ? LIMIT 1";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -50,9 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['id'] = $user['codigo'];
                 $_SESSION['nome'] = $user['nome'];
+                $_SESSION['role'] = $user['tipo_usuario']; // Armazena o tipo de usuário na sessão
 
-                header("Location: ../Landingpage/index.php"); // Redireciona para a Landing Page
-                exit;
+                // 6. REDIRECIONAR COM BASE NO TIPO DE USUÁRIO
+                if ($user['tipo_usuario'] === 'admin') {
+                    header("Location: ../administracao/respostas.php"); // Redireciona admin para a página de respostas
+                } else {
+                    header("Location: ../Landingpage/index.php"); // Redireciona usuário comum para a Landing Page
+                }
+                exit; // Importante sair após o redirecionamento
             }
         }
     }

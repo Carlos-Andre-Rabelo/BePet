@@ -22,11 +22,11 @@
                     <li><a href="respostas.php" class="active">Mensagens</a></li>
                     <li><a href="#">Configurações</a></li>
                     <!-- O botão Sair será movido para dentro do menu no mobile via CSS -->
-                    <li class="nav-cta-mobile"><a href="../Landingpage/BePet.php" class="header-cta-button">Sair</a></li>
+                    <li class="nav-cta-mobile"><a href="../Landingpage/index.php" class="header-cta-button">Sair</a></li>
                 </ul>
             </nav>
             <!-- Botão Sair para Desktop -->
-            <a href="../Landingpage/BePet.php" class="header-cta-button desktop-only">Sair</a>
+            <a href="../Landingpage/index.php" class="header-cta-button desktop-only">Sair</a>
             <!-- Botão Hambúrguer para Mobile -->
             <button class="menu-mobile-toggle" aria-label="Abrir menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
