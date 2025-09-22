@@ -210,6 +210,33 @@ header .container {
     display: none; /* Escondido no mobile */
 }
 
+/* Estilos para a área do usuário logado */
+.user-actions {
+    display: none; /* Escondido no mobile por padrão */
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-message {
+    font-weight: 600;
+    color: var(--cor-terciaria);
+}
+
+.logout-link {
+    color: var(--cor-primaria);
+    font-weight: 700;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 2px solid var(--cor-primaria);
+    border-radius: 10px;
+    transition: var(--transicao-rapida);
+}
+
+.logout-link:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+}
+
 /* --- Botão Hambúrguer (Base Mobile) --- */
 .menu-mobile-toggle {
     display: flex; /* Mostrado no mobile */
@@ -521,6 +548,11 @@ footer {
         display: inline-block; /* Mostra o botão CTA no header */
     }
     
+    /* Mostra a área do usuário em telas maiores */
+    .user-actions {
+        display: flex;
+    }
+
     .menu-mobile-toggle {
         display: none; /* ESCONDE o botão hambúrguer */
     }

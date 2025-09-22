@@ -1,3 +1,66 @@
+<?php
+// Inicia a sessão. Isso deve ser a primeira coisa no seu script.
+session_start();
+
+// Se o usuário já estiver logado, redireciona para a página do painel
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('Location: painel.php');
+    exit;
+}
+
+$login_error = '';
+
+// 1. VERIFICAR SE O FORMULÁRIO FOI ENVIADO
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // 2. CONECTAR AO BANCO DE DADOS (mesmas credenciais do outro script)
+    $servidor = "localhost";
+    $usuario = "root";
+    $senha_db = ""; // Renomeado para não conflitar com a senha do formulário
+    $banco = "bepet";
+
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    try {
+        $conexao = new mysqli($servidor, $usuario, $senha_db, $banco);
+    } catch (mysqli_sql_exception $e) {
+        // Em produção, logue o erro. Para o usuário, mostre uma mensagem genérica.
+        // error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+        die("Desculpe, estamos com problemas técnicos. Tente novamente mais tarde.");
+    }
+
+    // 3. COLETAR E VALIDAR DADOS
+    $email = trim($_POST['email']);
+    $senha = trim($_POST['senha']);
+
+    if (!empty($email) && !empty($senha) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // 4. PREPARAR E EXECUTAR A CONSULTA SEGURA
+        $sql = "SELECT codigo, nome, senha FROM login WHERE email = ? LIMIT 1";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows === 1) {
+            $user = $resultado->fetch_assoc();
+
+            // 5. VERIFICAR A SENHA
+            if (password_verify($senha, $user['senha'])) {
+                // Senha correta! Iniciar a sessão do usuário.
+                session_regenerate_id(); // Previne session fixation
+                $_SESSION['loggedin'] = true;
+                $_SESSION['id'] = $user['codigo'];
+                $_SESSION['nome'] = $user['nome'];
+
+                header("Location: ../Landingpage/index.php"); // Redireciona para a Landing Page
+                exit;
+            }
+        }
+    }
+    // Se chegou até aqui, o login falhou.
+    $login_error = "E-mail ou senha inválidos.";
+    $conexao->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,10 +77,18 @@
     <main class="login-main">
         <div class="login-container">
             <a href="../Landingpage/index.php" class="logo">BePet</a>
-            <form action="" method="POST" class="login-form">
+            <form action="login.php" method="POST" class="login-form">
                 <h2>Acesse sua conta</h2>
                 <p>Bem-vindo de volta! Sentimos sua falta.</p>
                 
+                <?php if (isset($_GET['status']) && $_GET['status'] === 'conta_criada'): ?>
+                    <div class="login-success">Conta criada com sucesso! Faça o login para continuar.</div>
+                <?php endif; ?>
+
+                <?php if (!empty($login_error)): ?>
+                    <div class="login-error"><?php echo htmlspecialchars($login_error); ?></div>
+                <?php endif; ?>
+
                 <div class="form-group">
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
@@ -30,6 +101,7 @@
 
                 <button type="submit">Entrar</button>
             </form>
+            <p class="create-account">Não possui conta? <a href="criar_conta.php"><em>Crie uma!</em></a></p>
         </div>
     </main>
 

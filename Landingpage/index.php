@@ -1,3 +1,6 @@
+<?php
+session_start(); // Inicia a sessão para verificar se o usuário está logado
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +9,7 @@
     <title>BePet - Cuidando de quem você ama</title>
     <meta name="description" content="A BePet oferece os melhores serviços e produtos para o seu animal de estimação. Banhos, tosa, rações, brinquedos e muito mais!">
     <meta name="keywords" content="petshop, banho e tosa, ração, cachorro, gato, pet">
-    <link rel="stylesheet" href="BePet.css">
+    <link rel="stylesheet" href="style.css">
 
     </head>
 <body>
@@ -25,7 +28,20 @@
             </ul>
         </nav>
 
-        <a href="../login/login.php" class="header-cta-button cta-button">Entrar</a>
+        <div class="user-actions">
+            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <?php
+                    // Pega o primeiro nome para uma saudação mais curta
+                    $nome_completo = $_SESSION['nome'];
+                    $partes_nome = explode(' ', $nome_completo);
+                    $primeiro_nome = htmlspecialchars($partes_nome[0]);
+                ?>
+                <span class="welcome-message">Olá, <?php echo $primeiro_nome; ?>!</span>
+                <a href="../login/logout.php" class="logout-link">Sair</a>
+            <?php else: ?>
+                <a href="../login/login.php" class="header-cta-button cta-button">Entrar</a>
+            <?php endif; ?>
+        </div>
 
         <button class="menu-mobile-toggle" aria-label="Abrir menu">
             <span class="bar"></span>
