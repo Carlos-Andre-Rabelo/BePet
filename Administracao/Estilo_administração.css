@@ -268,6 +268,21 @@ header .container {
     background-color: #1a333d;
 }
 
+/* =====================================
+   FORMULÁRIOS
+   ===================================== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    gap: 15px;
+    margin-top: 20px;
+}
+.form-actions .btn {
+    /* Desktop: Não cresce, mantém o tamanho base */
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 140px; /* Define a largura base dos botões */
+}
 
 /* =====================================
    FOOTER
@@ -339,11 +354,20 @@ footer .container {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: var(--transition);
+    /* Animação de entrada */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.2s ease-out;
 }
 .produto-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+}
+
+/* Estado final da animação */
+.produto-card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .produto-card img {
@@ -386,46 +410,56 @@ footer .container {
     }
 
     .main-nav {
-        display: none; /* Esconde o menu por padrão */
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: fixed; /* Fixo para cobrir a tela toda */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
+        position: absolute; /* Posicionado em relação ao header */
+        top: 100%; /* Logo abaixo do header */
+        right: 0;
+        width: 280px; /* Largura do menu */
         background-color: var(--cor-fundo);
         z-index: 1005;
-        transition: opacity 0.3s ease;
+        display: flex; /* Mantém o flexbox para alinhamento interno */
+        /* Animação de deslize de cima para baixo */
+        transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+        /* Estado inicial (fechado) */
+        max-height: 0;
         opacity: 0;
+        visibility: hidden;
+        padding: 0 20px; /* Mantém o padding lateral */
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        box-shadow: var(--box-shadow-light);
+        border: 1px solid var(--cor-borda);
+        border-top: none;
     }
 
     .main-nav.active {
-        display: flex; /* Mostra o menu quando ativo */
+        max-height: 400px; /* Altura suficiente para o conteúdo */
         opacity: 1;
+        visibility: visible;
+        padding: 20px;
     }
 
     .main-nav ul {
         flex-direction: column;
-        gap: 40px;
-        text-align: center;
+        gap: 15px; /* Espaçamento menor entre os links */
+        text-align: left; /* Alinha o texto à esquerda */
+        width: 100%;
     }
 
     .main-nav a {
-        /* Fonte fluida para se adaptar a larguras menores */
-        font-size: 7vw;
+        font-size: 1.2rem; /* Tamanho de fonte menor e fixo */
     }
 
     /* Mostra o botão "Sair" dentro do menu mobile */
     .nav-cta-mobile {
         display: block;
-        margin-top: 40px;
+        margin-top: 20px;
     }
     /* Seletor mais específico para garantir que o estilo seja aplicado */
     .main-nav .nav-cta-mobile .header-cta-button {
         background-color: var(--cor-primaria);
-        padding: 12px 30px;
+        padding: 10px 25px; /* Botão um pouco menor */
+        width: 100%; /* Ocupa toda a largura do menu */
+        text-align: center;
     }
     .main-nav .nav-cta-mobile .header-cta-button:hover {
         background-color: #e65a5a;
@@ -433,8 +467,16 @@ footer .container {
 
     /* --- Conteúdo Principal Mobile --- */
     .card-mensagem { padding: 20px; }
-    .admin-actions { flex-direction: column; gap: 15px; }
-    .admin-actions a { width: 100%; }
+    .admin-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .admin-actions a {
+        width: 100%;
+    }
+    .form-actions .btn {
+        flex: 1; /* Mobile: Faz os botões dividirem o espaço igualmente */
+    }
 
     /* --- Footer Mobile --- */
     footer .container {

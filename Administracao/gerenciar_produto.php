@@ -67,11 +67,11 @@ if ($is_edit) {
 
 <header>
     <div class="container">
-        <a href="respostas.php" class="logo">Administração - BePet</a>
+        <a href="listar_respostas.php" class="logo">Administração - BePet</a>
         <nav class="main-nav">
             <ul>
                 <li><a href="#">Dashboard</a></li>
-                <li><a href="respostas.php">Mensagens</a></li>
+                <li><a href="listar_respostas.php">Mensagens</a></li>
                 <li><a href="listar_produtos.php" class="active">Produtos</a></li>
                 <li class="nav-cta-mobile"><a href="../login/logout.php" class="header-cta-button">Sair</a></li>
             </ul>
@@ -131,14 +131,29 @@ if ($is_edit) {
                             <div class="form-text"><?php echo $is_edit ? 'Deixe em branco para manter a imagem atual.' : 'Apenas .png, .jpg, .jpeg ou .webp. Máx: 2MB.'; ?></div>
                         </div>
 
-                        <button type="submit" class="btn btn-adicionar" style="margin-top: 15px;">Salvar</button>
-                        <a href="listar_produtos.php" class="btn btn-responder" style="margin-top: 15px;">Cancelar</a>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-adicionar">Salvar</button>
+                            <a href="listar_produtos.php" class="btn btn-responder">Cancelar</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 </main>
+
+<script>
+    (function() {
+        const menuMobileToggle = document.querySelector('.menu-mobile-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        if (menuMobileToggle && mainNav) {
+            menuMobileToggle.addEventListener('click', () => {
+                menuMobileToggle.classList.toggle('active');
+                mainNav.classList.toggle('active');
+            });
+        }
+    })();
+</script>
 
 </body>
 </html>

@@ -44,11 +44,11 @@ $pageTitle = "Gerenciar Produtos";
 
 <header>
     <div class="container">
-        <a href="respostas.php" class="logo">Administração - BePet</a>
+        <a href="listar_respostas.php" class="logo">Administração - BePet</a>
         <nav class="main-nav">
             <ul>
                 <li><a href="#">Dashboard</a></li>
-                <li><a href="respostas.php">Mensagens</a></li>
+                <li><a href="listar_respostas.php">Mensagens</a></li>
                 <li><a href="listar_produtos.php" class="active">Produtos</a></li>
                 <li class="nav-cta-mobile"><a href="../login/logout.php" class="header-cta-button">Sair</a></li>
             </ul>
@@ -119,6 +119,20 @@ $pageTitle = "Gerenciar Produtos";
             });
         }
     })();
+
+    // Script para animação de fade-in dos cards de produto
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.produto-card');
+        
+        cards.forEach((card, index) => {
+            // Cria um atraso crescente para cada card, gerando um efeito cascata
+            const delay = (index + 1) * 100; // Atraso de 100ms entre cada card
+
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, delay);
+        });
+    });
 </script>
 
 </body>

@@ -7,7 +7,7 @@ session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     // Verifica se a 'role' do usuário é de administrador
     if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-        header('Location: ../administracao/respostas.php'); // Redireciona admin para a página de respostas
+        header('Location: ../administracao/listar_respostas.php'); // Redireciona admin para a página de respostas
     } else {
         header('Location: ../Landingpage/index.php'); // Redireciona usuário comum para a Landing Page
     }
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // 6. REDIRECIONAR COM BASE NO TIPO DE USUÁRIO
                 if ($user['tipo_usuario'] === 'admin') {
-                    header("Location: ../administracao/respostas.php"); // Redireciona admin para a página de respostas
+                    header("Location: ../administracao/listar_respostas.php"); // Redireciona admin para a página de respostas
                 } else {
                     header("Location: ../Landingpage/index.php"); // Redireciona usuário comum para a Landing Page
                 }

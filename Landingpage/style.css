@@ -178,36 +178,46 @@ header .container {
 
 /* --- Navegação (Base Mobile) --- */
 .main-nav {
-    display: none; /* Escondido por padrão */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* Novo estilo de menu suspenso */
     position: absolute;
-    top: 85px; /* Altura aproximada do header */
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 85px);
+    top: 100%; /* Logo abaixo do header */
+    right: 0;
+    width: 280px;
     background-color: var(--cor-fundo);
+    z-index: 1005;
+    display: flex;
+    /* Animação de deslize de cima para baixo */
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, opacity 0.3s ease-in-out;
+    overflow: hidden;
+    /* Estado inicial (fechado) */
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0 20px;
+    border-radius: 0 0 var(--raio-borda) var(--raio-borda);
+    box-shadow: var(--sombra-leve);
+    border: 1px solid var(--cor-cinza-claro);
+    border-top: none;
 }
 .main-nav.active {
-    display: flex; /* Mostra o menu quando ativo */
-    animation: fadeInUp 0.3s ease-out;
+    max-height: 450px; /* Altura suficiente para o conteúdo */
+    opacity: 1;
+    visibility: visible;
+    padding: 20px;
 }
 .main-nav ul {
     list-style: none;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 25px;
+    gap: 15px;
+    text-align: left;
+    width: 100%;
 }
 .main-nav a {
-    font-family: var(--fonte-titulos);
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.2rem; /* Tamanho de fonte menor e fixo */
+    font-weight: 600;
     color: var(--cor-terciaria);
     text-decoration: none;
-    padding: 10px;
 }
 .main-nav a:hover {
     color: var(--cor-primaria);
@@ -234,16 +244,18 @@ header .container {
 .logout-link-mobile,
 .login-link-mobile {
     display: block; /* Garante que ele apareça no fluxo do menu */
-    margin-top: 20px; /* Espaçamento extra */
+    margin-top: 15px; /* Espaçamento extra */
 }
 .logout-link-mobile a,
 .login-link-mobile a {
-    /* Estilo para parecer um botão */
     background-color: var(--cor-primaria);
     color: var(--cor-branca) !important; /* !important para sobrescrever a cor padrão do link */
-    border-radius: 50px; /* Bordas mais arredondadas para um visual de pílula */
-    padding: 12px 25px;
-    font-size: 1.5rem;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: center;
+    display: block; /* Para que o width 100% funcione */
 }
 
 .menu-mobile-toggle {

@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// 1. VERIFICAR SE O USUÁRIO É ADMINISTRADOR
+// Esta é a camada de segurança que impede o acesso não autorizado.
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login/login.php");
+    exit();
+}
 
 // Forçar a exibição de erros durante o desenvolvimento
 ini_set('display_errors', 1);
@@ -9,7 +17,7 @@ $usuario = "root";
 $senha = "";
 $banco = "bepet";
 
-// 1. CRIAR A CONEXÃO COM O BANCO DE DADOS
+// 2. CRIAR A CONEXÃO COM O BANCO DE DADOS
 // Usaremos o MySQLi para isso. A variável da conexão será $conexao.
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -22,7 +30,7 @@ try {
     // Exibe uma mensagem genérica e segura para o usuário.
     // Usamos 'die()' para parar a execução e evitar que o resto da página (que depende do banco) tente carregar.
     $erro_conexao = "Não foi possível conectar ao banco de dados. Verifique se o serviço MySQL está ativo e tente novamente.";
-    // Incluímos a view para mostrar o erro dentro do layout da página.
+    // Incluímos a view para mostrar o erro dentro do layout da página, corrigindo o nome do arquivo.
     require 'respostas.view.php';
     die();
 }

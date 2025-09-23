@@ -15,11 +15,11 @@
 
     <header>
         <div class="container">
-            <a href="respostas.php" class="logo">Administração - BePet</a>
+            <a href="listar_respostas.php" class="logo">Administração - BePet</a>
             <nav class="main-nav">
                 <ul>
                     <li><a href="#">Dashboard</a></li>
-                    <li><a href="respostas.php" class="active">Mensagens</a></li>
+                    <li><a href="listar_respostas.php" class="active">Mensagens</a></li>
                     <li><a href="listar_produtos.php">Produtos</a></li>
                     <!-- O botão Sair será movido para dentro do menu no mobile via CSS -->
                     <li class="nav-cta-mobile"><a href="../Landingpage/index.php" class="header-cta-button">Sair</a></li>
@@ -120,7 +120,7 @@
         (function() {
             const menuMobileToggle = document.querySelector('.menu-mobile-toggle');
             const mainNav = document.querySelector('.main-nav');
-
+    
             if (menuMobileToggle && mainNav) {
                 menuMobileToggle.addEventListener('click', () => {
                     // Adiciona/remove a classe 'active' no botão (para animar o 'X')
