@@ -169,6 +169,13 @@ header .container {
     color: var(--cor-primaria);
 }
 
+/* --- Ações do Header (Login/Logout) --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 /* --- Navegação (Base Mobile) --- */
 .main-nav {
     display: none; /* Escondido por padrão */
@@ -210,34 +217,35 @@ header .container {
     display: none; /* Escondido no mobile */
 }
 
-/* Estilos para a área do usuário logado */
-.user-actions {
-    display: none; /* Escondido no mobile por padrão */
-    align-items: center;
-    gap: 15px;
-}
-
+/* --- Estilos de Login/Logout --- */
 .welcome-message {
     font-weight: 600;
     color: var(--cor-terciaria);
+    font-size: 0.9rem; /* Tamanho menor para caber no header mobile */
 }
 
-.logout-link {
-    color: var(--cor-primaria);
-    font-weight: 700;
-    text-decoration: none;
-    padding: 8px 12px;
-    border: 2px solid var(--cor-primaria);
-    border-radius: 10px;
-    transition: var(--transicao-rapida);
+/* Link de Sair no Desktop (escondido no mobile) */
+.logout-link-desktop {
+    display: none;
 }
 
-.logout-link:hover {
+/* Link de Sair no Mobile (visível apenas no menu aberto) */
+/* Estilo compartilhado para os botões de ação no menu mobile */
+.logout-link-mobile,
+.login-link-mobile {
+    display: block; /* Garante que ele apareça no fluxo do menu */
+    margin-top: 20px; /* Espaçamento extra */
+}
+.logout-link-mobile a,
+.login-link-mobile a {
+    /* Estilo para parecer um botão */
     background-color: var(--cor-primaria);
-    color: var(--cor-branca);
+    color: var(--cor-branca) !important; /* !important para sobrescrever a cor padrão do link */
+    border-radius: 50px; /* Bordas mais arredondadas para um visual de pílula */
+    padding: 12px 25px;
+    font-size: 1.5rem;
 }
 
-/* --- Botão Hambúrguer (Base Mobile) --- */
 .menu-mobile-toggle {
     display: flex; /* Mostrado no mobile */
     flex-direction: column;
@@ -513,7 +521,7 @@ footer {
 
     /* --- Header para Tablet/Desktop --- */
     .main-nav {
-        display: block; /* Mostra a navegação principal */
+        display: flex; /* Usar flex para alinhar com as ações */
         position: static;
         height: auto;
         width: auto;
@@ -548,11 +556,33 @@ footer {
         display: inline-block; /* Mostra o botão CTA no header */
     }
     
-    /* Mostra a área do usuário em telas maiores */
-    .user-actions {
-        display: flex;
+    .welcome-message {
+        font-size: 1rem; /* Tamanho normal para o header do desktop */
     }
 
+    /* Link de Sair no Desktop (agora visível) */
+    .logout-link-desktop {
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--cor-primaria);
+        padding: 8px 12px;
+        border: 2px solid var(--cor-primaria);
+        border-radius: 10px;
+        transition: var(--transicao-rapida);
+    }
+    .logout-link-desktop:hover {
+        background-color: var(--cor-primaria);
+        color: var(--cor-branca);
+    }
+
+    /* Link de Sair no Mobile (escondido no desktop) */
+    .logout-link-mobile,
+    .login-link-mobile {
+        display: none;
+    }
+    
     .menu-mobile-toggle {
         display: none; /* ESCONDE o botão hambúrguer */
     }

@@ -25,10 +25,17 @@ session_start(); // Inicia a sessão para verificar se o usuário está logado
                 <li><a href="#sobre-nos">Sobre Nós</a></li>
                 <li><a href="#depoimentos">Depoimentos</a></li>
                 <li><a href="#contato">Contato</a></li>
+                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                    <!-- Link de Sair para o menu mobile -->
+                    <li class="logout-link-mobile"><a href="../login/logout.php">Sair</a></li>
+                <?php else: ?>
+                    <!-- Link de Entrar para o menu mobile -->
+                    <li class="login-link-mobile"><a href="../login/login.php">Entrar</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
 
-        <div class="user-actions">
+        <div class="header-actions">
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <?php
                     // Pega o primeiro nome para uma saudação mais curta
@@ -37,7 +44,7 @@ session_start(); // Inicia a sessão para verificar se o usuário está logado
                     $primeiro_nome = htmlspecialchars($partes_nome[0]);
                 ?>
                 <span class="welcome-message">Olá, <?php echo $primeiro_nome; ?>!</span>
-                <a href="../login/logout.php" class="logout-link">Sair</a>
+                <a href="../login/logout.php" class="logout-link-desktop">Sair</a>
             <?php else: ?>
                 <a href="../login/login.php" class="header-cta-button cta-button">Entrar</a>
             <?php endif; ?>
@@ -153,12 +160,22 @@ session_start(); // Inicia a sessão para verificar se o usuário está logado
                         }
                         ?>
 
+                        <?php
+                        // Define as variáveis para o nome e e-mail, preenchendo se o usuário estiver logado
+                        $form_nome = '';
+                        $form_email = '';
+                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                            $form_nome = isset($_SESSION['nome']) ? htmlspecialchars($_SESSION['nome']) : '';
+                            $form_email = isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : '';
+                        }
+                        ?>
+
                         <form action="enviar_mensagem.php" method="POST">
                             <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome" required>
+                            <input type="text" id="nome" name="nome" value="<?php echo $form_nome; ?>" required>
 
                             <label for="email">E-mail:</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" value="<?php echo $form_email; ?>" required>
 
                             <label for="mensagem">Mensagem:</label>
                             <textarea id="mensagem" name="mensagem" rows="5" required></textarea>

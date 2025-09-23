@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($email) && !empty($senha) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         // 4. PREPARAR E EXECUTAR A CONSULTA SEGURA
-        $sql = "SELECT codigo, nome, senha, tipo_usuario FROM login WHERE email = ? LIMIT 1";
+        $sql = "SELECT codigo, nome, email, senha, tipo_usuario FROM login WHERE email = ? LIMIT 1";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['id'] = $user['codigo'];
                 $_SESSION['nome'] = $user['nome'];
+                $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['tipo_usuario']; // Armazena o tipo de usuário na sessão
 
                 // 6. REDIRECIONAR COM BASE NO TIPO DE USUÁRIO
@@ -83,6 +84,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+    </style>
 </head>
 <body>
 

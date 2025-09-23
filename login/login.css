@@ -42,7 +42,7 @@ body, html {
     font-family: var(--fonte-titulos);
     color: var(--cor-terciaria);
     display: block; /* Para aplicar margem */
-    margin-bottom: 30px; /* Espaço entre o logo e o formulário */
+    margin-bottom: 5px; /* Espaço entre o logo e o formulário */
     transition: var(--transicao-media);
 }
 
@@ -57,6 +57,16 @@ body, html {
     min-height: 100vh;
     padding: 20px;           /* Adiciona um respiro nas laterais em telas muito pequenas */
     box-sizing: border-box;  /* Garante que o padding não quebre o layout de 100vh */
+}
+
+.login-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .login-container {
@@ -128,6 +138,14 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: var(--cor-secundaria);
     color: var(--cor-terciaria);
+}
+
+/* Link para criar conta */
+.login-container .create-account {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--cor-texto); /* Usando variável para consistência */
 }
 
 /* --- Responsividade para Dispositivos Móveis --- */
