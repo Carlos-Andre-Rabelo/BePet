@@ -1,30 +1,50 @@
 # Projeto BePet 🐾
 
-Este é um projeto desenvolvido para a disciplina de Programação para Web, com o objetivo de criar uma plataforma simples para o gerenciamento de mensagens de contato.
+Este é um projeto desenvolvido para a disciplina de Programação para Web, com o objetivo de criar uma plataforma para um petshop fictício, incluindo uma vitrine de produtos, formulário de contato e um painel administrativo para gerenciar mensagens e produtos.
+
+## ✨ Funcionalidades
+
+- **Página Principal (Landing Page)**
+  - Vitrine de serviços e depoimentos.
+  - Exibição de produtos cadastrados no banco de dados em um carrossel.
+  - Formulário de contato que salva as mensagens para o administrador.
+  - Sistema de autenticação de usuários (Login/Logout) com saudação personalizada.
+
+- **Painel Administrativo**
+  - Acesso restrito para usuários com perfil de `admin`.
+  - Visualização e exclusão de mensagens de contato.
+  - Gerenciamento completo de produtos (CRUD - Criar, Ler, Atualizar, Deletar) com upload de imagens.
+
+- **Sistema de Autenticação**
+  - Página de login com verificação de credenciais.
+  - Página de criação de conta com criptografia de senha.
+  - Redirecionamento baseado no tipo de usuário (`user` ou `admin`) após o login.
 
 ## Estrutura dos Arquivos
 
-O projeto está dividido em duas partes principais:
+O projeto está dividido nas seguintes pastas:
 
 - **/Landingpage**: Contém os arquivos da página principal (vitrine) do site.
-  - `index.php`: Estrutura principal da página.
+  - `index.php`: Estrutura principal da página, que exibe produtos e o formulário.
   - `style.css`: Folha de estilos da landing page.
   - `enviar_mensagem.php`: Script PHP que processa o formulário de contato e salva as informações no banco de dados.
 
 - **/Administracao**: Contém os arquivos do painel de gerenciamento de mensagens.
-  - `respostas.php`: Página que exibe as mensagens recebidas do banco de dados.
-  - `respostas.view.php`: Template HTML que renderiza a página de respostas.
-  - `excluir.php`: Script para remover uma mensagem específica.
+  - `respostas.php` / `respostas.view.php`: Páginas que exibem as mensagens recebidas.
+  - `excluir.php`: Script para remover uma mensagem.
+  - `listar_produtos.php`: Página que exibe todos os produtos cadastrados.
+  - `gerenciar_produto.php`: Formulário para cadastrar ou editar um produto.
+  - `processa_produto.php`: Script que lida com a lógica de criar, editar e excluir produtos, incluindo o upload de imagens.
   - `Estilo_administração.css`: Folha de estilos do painel administrativo.
 
 - **/login**: Contém os arquivos para o sistema de autenticação de usuários.
   - `login.php`: Página e lógica para o login de usuários.
   - `criar_conta.php`: Página e lógica para o registro de novos usuários.
   - `logout.php`: Script para encerrar a sessão do usuário.
-  - `login.css`: Folha de estilos para as páginas de login e registro.
+  - `login.css`: Folha de estilos compartilhada para as páginas de login e registro.
 
 - **/Data Base**: Contém o arquivo de script SQL para a criação da estrutura do banco de dados.
-  - `bepet.sql`: Script para criar as tabelas `mensagem` e `login`.
+  - `bepet.sql`: Script para criar as tabelas `mensagem`, `login` e `produtos`.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -62,13 +82,16 @@ git clone https://github.com/Carlos-Andre-Rabelo/BePet.git ProjetoBePet
 2. Abra seu navegador e acesse o phpMyAdmin em `http://localhost/phpmyadmin`.
 3. Crie um novo banco de dados chamado `bepet`. (Certifique-se de que a codificação seja `utf8mb4_general_ci` para melhor compatibilidade).
 4. Selecione o banco `bepet` recém-criado e clique na aba **Importar**.
-5. Clique em "Escolher arquivo" e selecione o arquivo `bepet.sql` localizado na pasta `Data Base` dentro do projeto que você clonou.
+5. Clique em "Escolher arquivo" e selecione o arquivo `bepet.sql` localizado na pasta `/Data Base` dentro do projeto que você clonou.
 6. Clique em **Executar** no final da página para criar as tabelas.
 
 ### 3. Acessar a Aplicação
 
 - Para ver a landing page, acesse: `http://localhost/ProjetoBePet/Landingpage/index.php`
-- Para acessar a página de login (que redireciona para o painel de admin se as credenciais forem de administrador), acesse: `http://localhost/ProjetoBePet/login/login.php`
+- Para acessar a página de login, acesse: `http://localhost/ProjetoBePet/login/login.php`
+- Para acessar o painel de administração (após fazer login como admin), as páginas principais são:
+  - `http://localhost/ProjetoBePet/Administracao/respostas.php` (Mensagens)
+  - `http://localhost/ProjetoBePet/Administracao/listar_produtos.php` (Produtos)
 
 ## 🧑‍💻 Como Tornar um Usuário Administrador
 

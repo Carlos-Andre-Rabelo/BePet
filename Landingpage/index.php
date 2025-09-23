@@ -1,5 +1,33 @@
 <?php
 session_start(); // Inicia a sessão para verificar se o usuário está logado
+
+// --- INÍCIO DA LÓGICA PARA BUSCAR PRODUTOS ---
+$produtos = []; // Inicializa o array de produtos
+
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
+$banco = "bepet";
+
+try {
+    // Usar mysqli com tratamento de erro
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+
+    // Query para buscar os produtos mais recentes (ex: os últimos 6)
+    $sql_produtos = "SELECT nome, preco, caminho_imagem FROM produtos ORDER BY id DESC LIMIT 6";
+    $resultado_produtos = $conexao->query($sql_produtos);
+
+    if ($resultado_produtos) {
+        $produtos = $resultado_produtos->fetch_all(MYSQLI_ASSOC);
+    }
+
+    $conexao->close();
+} catch (mysqli_sql_exception $e) {
+    // Em um ambiente real, é melhor logar o erro do que exibi-lo.
+    // A página continuará a ser renderizada, e a seção de produtos mostrará uma mensagem de "nenhum produto".
+}
+// --- FIM DA LÓGICA PARA BUSCAR PRODUTOS ---
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -10,6 +38,9 @@ session_start(); // Inicia a sessão para verificar se o usuário está logado
     <meta name="description" content="A BePet oferece os melhores serviços e produtos para o seu animal de estimação. Banhos, tosa, rações, brinquedos e muito mais!">
     <meta name="keywords" content="petshop, banho e tosa, ração, cachorro, gato, pet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- 1. Adicionar o CSS do Swiper.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     </head>
 <body>
@@ -94,25 +125,32 @@ session_start(); // Inicia a sessão para verificar se o usuário está logado
         <section id="produtos">
             <div class="container">
                 <h2>Produtos em Destaque</h2>
-                <div class="produtos-grid">
-                    <article class="produto-item">
-                        <img src="https://petiser.com.br/wp-content/uploads/2023/03/16-_-Como-entender-as-informacoes-dos-rotulos-de-racao-para-caes.jpg" alt="Saco de ração premium para cães">
-                        <h3>Ração Premium Filhotes</h3>
-                        <p class="preco">R$ 120,00</p>
-                        <button>Comprar</button>
-                    </article>
-                    <article class="produto-item">
-                        <img src="https://www.adoropets.com.br/wp-content/uploads/2020/08/2e82r5f4bf9izoxpl9a9d0znj.jpg" alt="Brinquedo de corda colorido para pets">
-                        <h3>Brinquedo de Corda</h3>
-                        <p class="preco">R$ 35,00</p>
-                        <button>Comprar</button>
-                    </article>
-                    <article class="produto-item">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.z0amnokqvTmxfGK8kpxV7gAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Cama macia e confortável para pets">
-                        <h3>Caminha Aconchegante</h3>
-                        <p class="preco">R$ 99,90</p>
-                        <button>Comprar</button>
-                    </article>
+                <!-- 2. Estrutura do Slider Swiper.js -->
+                <div class="swiper produtos-slider">
+                    <div class="swiper-wrapper">
+                        <?php if (!empty($produtos)): ?>
+                            <?php foreach ($produtos as $produto): ?>
+                                <!-- Cada produto agora é um 'swiper-slide' -->
+                                <div class="swiper-slide">
+                                    <article class="produto-item">
+                                        <img src="../<?php echo htmlspecialchars($produto['caminho_imagem']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                        <h3><?php echo htmlspecialchars($produto['nome']); ?></h3>
+                                        <p class="preco">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                                        <button>Comprar</button>
+                                    </article>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="aviso-sem-produtos">
+                                <p>Nenhum produto em destaque no momento. Volte em breve!</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <!-- Adiciona setas de navegação -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Adiciona paginação (bolinhas) -->
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </section>
@@ -216,6 +254,9 @@ http://googleusercontent.com/image_collection/image_retrieval/154071818138497661
         </div>
     </footer>
 
+    <!-- 3. Adicionar o JavaScript do Swiper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
         // Seleciona os elementos do DOM
         const menuMobileToggle = document.querySelector('.menu-mobile-toggle');
@@ -236,6 +277,53 @@ http://googleusercontent.com/image_collection/image_retrieval/154071818138497661
                 menuMobileToggle.classList.remove('active');
                 mainNav.classList.remove('active');
             });
+        });
+    </script>
+
+    <!-- 4. Inicializar o Swiper.js -->
+    <script>
+        const swiper = new Swiper('.produtos-slider', {
+            // Ativa o loop contínuo
+            loop: true,
+            // Ativa o autoplay
+            autoplay: {
+                delay: 6000, // Aumentado para 6 segundos
+                disableOnInteraction: false, // Não para o autoplay ao interagir
+            },
+            
+            // Torna o slider arrastável no desktop
+            grabCursor: true,
+
+            // Paginação (bolinhas)
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            // Setas de navegação
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // Breakpoints responsivos
+            breakpoints: {
+                // Para telas mobile (largura >= 0px)
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+                // Para telas de tablet (largura >= 768px)
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30
+                },
+                // Para telas de desktop (largura >= 1024px)
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                }
+            }
         });
     </script>
 

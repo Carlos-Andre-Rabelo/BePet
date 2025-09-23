@@ -20,7 +20,7 @@
                 <ul>
                     <li><a href="#">Dashboard</a></li>
                     <li><a href="respostas.php" class="active">Mensagens</a></li>
-                    <li><a href="#">Configurações</a></li>
+                    <li><a href="listar_produtos.php">Produtos</a></li>
                     <!-- O botão Sair será movido para dentro do menu no mobile via CSS -->
                     <li class="nav-cta-mobile"><a href="../Landingpage/index.php" class="header-cta-button">Sair</a></li>
                 </ul>
@@ -76,10 +76,10 @@
                                     $link_gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" . urlencode($msg['email']) . "&su=" . urlencode($assunto) . "&body=" . urlencode($corpo_email);
                                 ?>
                                 <div class="admin-actions">
-                                   <a href="<?= $link_gmail; ?>" class="btn-responder" target="_blank" rel="noopener noreferrer">
+                                   <a href="<?= $link_gmail; ?>" class="acao-responder" target="_blank" rel="noopener noreferrer">
                                        Responder
                                    </a>
-                                   <a href="excluir.php?codigo=<?= $msg['codigo']; ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir esta mensagem?');">
+                                   <a href="excluir.php?codigo=<?= $msg['codigo']; ?>" class="acao-excluir" onclick="return confirm('Tem certeza que deseja excluir esta mensagem?');">
                                        Excluir
                                    </a>
                                 </div>

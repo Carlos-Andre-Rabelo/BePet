@@ -193,19 +193,14 @@ header .container {
     justify-content: flex-end;
 }
 
-/* Estilo base para botões nas actions */
-.admin-actions a {
+/* Estilos específicos para os botões da página de MENSAGENS */
+.admin-actions .acao-responder,
+.admin-actions .acao-excluir {
     padding: 10px 20px;
-    border: none;
     border-radius: 8px;
-    font-family: var(--fonte-corpo);
     font-weight: 700;
-    cursor: pointer;
-    display: inline-block;
-    text-align: center;
+    text-decoration: none;
     transition: var(--transition);
-    background-color: var(--cor-borda);
-    color: var(--cor-terciaria);
 }
 
 .admin-actions a:hover {
@@ -213,26 +208,64 @@ header .container {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Botão de Responder */
-.btn-responder {
+.admin-actions .acao-responder {
     background-color: var(--cor-secundaria);
     color: var(--cor-branco);
 }
-
-.btn-responder:hover {
-    background-color: #4e98c1; /* Tom de azul para o hover */
+.admin-actions .acao-responder:hover {
+    background-color: #5a6268; /* Tom de cinza mais escuro */
     color: var(--cor-branco);
 }
 
-/* Botão de Excluir */
-.btn-excluir {
+.admin-actions .acao-excluir {
     background-color: var(--cor-primaria);
     color: var(--cor-branco);
 }
 
+/* =====================================
+   BOTÕES GLOBAIS DO PAINEL
+   ===================================== */
+/* Classe base para todos os botões */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block; /* Para que <a> se comporte como botão */
+    text-align: center;
+    text-decoration: none !important; /* Remove sublinhado */
+    transition: var(--transition);
+    color: var(--cor-branco); /* Cor do texto padrão para os botões */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: var(--cor-branco); /* Garante que a cor do texto não mude no hover */
+}
+
+/* Variações de Cor */
+.btn-responder {
+    background-color: var(--cor-secundaria);
+}
+.btn-responder:hover {
+    background-color: #5a6268;
+}
+
+.btn-excluir {
+    background-color: var(--cor-primaria);
+}
 .btn-excluir:hover {
     background-color: #e65a5a; /* Tom de vermelho mais escuro para o hover */
-    color: var(--cor-branco);
+}
+
+.btn-adicionar {
+    background-color: var(--cor-terciaria);
+}
+.btn-adicionar:hover {
+    background-color: #1a333d;
 }
 
 
@@ -269,6 +302,66 @@ footer .container {
     background-color: #d4edda; /* Verde claro */
     color: #155724;            /* Verde escuro */
     border-color: #c3e6cb;
+}
+
+.alerta-danger {
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24;            /* Vermelho escuro */
+    border-color: #f5c6cb;
+}
+
+/* =====================================
+   PÁGINA DE PRODUTOS
+   ===================================== */
+.header-actions-produtos {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas pequenas */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.header-actions-produtos h2 {
+    margin: 0;
+}
+
+.produtos-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.produto-card {
+    background: var(--cor-branco);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-light);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+.produto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+}
+
+.produto-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.produto-card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.produto-card-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--cor-terciaria); }
+.produto-card-content .preco { font-size: 1.3rem; font-weight: 700; color: var(--cor-primaria); margin-bottom: 15px; }
+
+.produto-card-actions { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--cor-borda); display: flex; gap: 10px; }
+/* Aplica o estilo de botão aos links dentro das ações do card */
+.produto-card-actions .btn {
+    flex-grow: 1; /* Faz os botões ocuparem o mesmo espaço */
+    padding: 8px 15px;
+    font-size: 0.9rem;
 }
 
 /* =====================================

@@ -1,0 +1,8 @@
+ # Ignorar dependências do Composer
+ /vendor/
+ 
+ # Ignorar arquivos de configuração local
+ .env
+ 
+ # Ignorar a pasta de uploads públicos
+ /public/uploads/

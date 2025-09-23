@@ -346,7 +346,7 @@ header .container {
     gap: 30px;
     grid-template-columns: 1fr;
 }
-.produto-item {
+.produto-item, .produto-card { /* Adicionando .produto-card para compatibilidade */
     background-color: var(--cor-fundo);
     padding: 20px;
     border-radius: var(--raio-borda);
@@ -355,22 +355,22 @@ header .container {
     text-align: center;
     border: 1px solid var(--cor-cinza-claro);
 }
-.produto-item:hover {
+.produto-item:hover, .produto-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 25px rgba(0,0,0,0.1);
 }
-.produto-item img {
+.produto-item img, .produto-card img {
     height: 250px;
     width: 100%;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 1.5rem;
 }
-.produto-item h3 {
+.produto-item h3, .produto-card h3 {
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
 }
-.produto-item .preco {
+.produto-item .preco, .produto-card .preco {
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--cor-primaria);
