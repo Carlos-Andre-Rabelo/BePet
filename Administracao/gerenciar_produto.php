@@ -70,7 +70,6 @@ if ($is_edit) {
         <a href="listar_respostas.php" class="logo">Administração - BePet</a>
         <nav class="main-nav">
             <ul>
-                <li><a href="#">Dashboard</a></li>
                 <li><a href="listar_respostas.php">Mensagens</a></li>
                 <li><a href="listar_produtos.php" class="active">Produtos</a></li>
                 <li class="nav-cta-mobile"><a href="../login/logout.php" class="header-cta-button">Sair</a></li>

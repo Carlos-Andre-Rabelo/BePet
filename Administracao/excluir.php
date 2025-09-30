@@ -47,7 +47,7 @@ if (isset($_GET['codigo']) && !empty($_GET['codigo'])) {
     if ($stmt->execute()) {
         // Se a exclusão foi bem-sucedida, redireciona de volta para a página de respostas
         // com um parâmetro de status para exibir uma mensagem de sucesso.
-        header("Location: respostas.php?status=excluido");
+        header("Location: listar_respostas.php?status=excluido");
         exit(); // Garante que o script pare de executar após o redirecionamento
     } else {
         // Se falhou, exibe um erro
